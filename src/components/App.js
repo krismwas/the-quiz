@@ -6,7 +6,7 @@ import Error from "./Error";
 import StartScreen from "./StartScreen";
 import Question from "./Question";
 
-const initialState = { status: "loading", questions: [] };
+const initialState = { status: "loading", questions: [], index: 0 };
 
 function reducer(state, action) {
   switch (action.type) {
@@ -22,7 +22,10 @@ function reducer(state, action) {
 }
 
 export default function App() {
-  const [{ status, questions }, dispatch] = useReducer(reducer, initialState);
+  const [{ status, questions, index }, dispatch] = useReducer(
+    reducer,
+    initialState
+  );
   const numOfQuestions = questions.length;
 
   useEffect(function () {
@@ -42,7 +45,7 @@ export default function App() {
         {status === "ready" && (
           <StartScreen numOfQuestions={numOfQuestions} dispatch={dispatch} />
         )}
-        {status === "active" && <Question />}
+        {status === "active" && <Question question={questions[index]} />}
       </Main>
     </div>
   );
