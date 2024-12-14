@@ -46,6 +46,13 @@ function reducer(state, action) {
         highscore:
           state.points > state.highscore ? state.points : state.highscore,
       };
+    case "restart":
+      return {
+        ...initialState,
+        highscore: state.highscore,
+        status: "ready",
+        questions: state.questions,
+      };
     default:
       throw new Error("invalid option");
   }
@@ -54,6 +61,7 @@ function reducer(state, action) {
 export default function App() {
   const [{ status, questions, index, answer, points, highscore }, dispatch] =
     useReducer(reducer, initialState);
+
   const numOfQuestions = questions.length;
   const totalPoints = questions.reduce((acc, cur) => cur.points + acc, 0);
   console.log(totalPoints);
@@ -97,11 +105,15 @@ export default function App() {
             />
           </>
         )}
+        {/* {status === "finished" && (
+          <FinishScreen points={points} totalPoints={totalPoints} />
+        )} */}
         {status === "finished" && (
           <FinishScreen
-            points={points}
             totalPoints={totalPoints}
+            points={points}
             highscore={highscore}
+            dispatch={dispatch}
           />
         )}
       </Main>
