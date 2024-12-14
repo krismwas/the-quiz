@@ -1,4 +1,4 @@
-function FinishScreen({ points, totalPoints }) {
+function FinishScreen({ points, totalPoints, highscore }) {
   const percentage = (points / totalPoints) * 100;
 
   return (
@@ -7,7 +7,7 @@ function FinishScreen({ points, totalPoints }) {
         You scored <strong>{points}</strong> out of {totalPoints} ({percentage}
         )%
       </p>
-      <p className="highscore">(High Score: X points)</p>
+      <p className="highscore">(High Score: {highscore} points)</p>
     </>
   );
 }
