@@ -75,6 +75,7 @@ export default function App() {
               numOfQuestions={numOfQuestions}
               totalPoints={totalPoints}
               points={points}
+              answer={answer}
             />
             <Question
               question={questions[index]}
