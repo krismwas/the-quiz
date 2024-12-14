@@ -6,7 +6,12 @@ import Error from "./Error";
 import StartScreen from "./StartScreen";
 import Question from "./Question";
 
-const initialState = { status: "loading", questions: [], index: 0 };
+const initialState = {
+  status: "loading",
+  questions: [],
+  index: 0,
+  answer: null,
+};
 
 function reducer(state, action) {
   switch (action.type) {
@@ -16,13 +21,15 @@ function reducer(state, action) {
       return { ...state, status: "error" };
     case "start":
       return { ...state, status: "active" };
+    case "newAnswer":
+      return { ...state, answer: action.payload };
     default:
       throw new Error("invalid option");
   }
 }
 
 export default function App() {
-  const [{ status, questions, index }, dispatch] = useReducer(
+  const [{ status, questions, index, answer }, dispatch] = useReducer(
     reducer,
     initialState
   );
@@ -45,7 +52,13 @@ export default function App() {
         {status === "ready" && (
           <StartScreen numOfQuestions={numOfQuestions} dispatch={dispatch} />
         )}
-        {status === "active" && <Question question={questions[index]} />}
+        {status === "active" && (
+          <Question
+            question={questions[index]}
+            answer={answer}
+            dispatch={dispatch}
+          />
+        )}
       </Main>
     </div>
   );
